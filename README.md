@@ -3,48 +3,45 @@
 This repository is created as part of my Ansible learning journey.  
 It includes simple playbooks to **install** and **remove Git** on remote Ubuntu servers.
 
-## 📦 Contents
+## ⚙️ Server Setup Playbook with Tags
 
-- `inventory.ini` – inventory file with target server(s)
-- `install_git.yml` – playbook to install Git
-- `remove_git.yml` – playbook to remove Git
-- `Makefile` – shortcuts to run playbooks
+This section contains an Ansible playbook designed to prepare a remote Ubuntu server with common development tools and user accounts. The playbook supports **tag-based execution**, allowing you to run only specific parts of the configuration.
 
-## 🚀 Usage
+### 📁 Contents
 
-### 1. Install Git on remote server
+- `playbook.yml` – main playbook with tagged tasks
+- `Makefile` – make commands to run tagged tasks
+- `inventory.ini` – defines remote servers
 
-```bash
-make install
-```
+### Tags in use
 
-### 2. Verify installation
+| Tag        | Description                                      |
+|------------|--------------------------------------------------|
+| `update`   | Updates the apt package cache                    |
+| `packages` | Installs required tools: Git, Make, Node.js      |
+| `users`    | Creates users: `arya`, `sansa`, and `tirion`     |
+| `all`      | Runs all of the above                            |
 
-```bash
-ssh root@IP_OF_YOUR_SERVER
-git --version
-# Output: git version 2.x.x
-```
+---
 
-### 3. Remove Git from remote server
+#### Check if users were created
 
 ```bash
-make remove
-```
-
-### 4. Verify removal
-```bash
-ssh root@IP_OF_YOUR_SERVER
-git --version
-# Output: Command 'git' not found
-```
+ssh root@IP_ADRESS_OF_YOUR_SERVER "grep -E 'arya|sansa|tirion' /etc/passwd"
+``` 
 
 ### Prerequisites
-A remote Ubuntu-based server (e.g. on DigitalOcean)
-SSH access with private key
-Python on the remote server (usually preinstalled)
-Ansible installed locally
+A remote Ubuntu server (e.g. from DigitalOcean)
+
+SSH access with a private key
+
+Python installed on the server
+
+Ansible installed on your local machine
 
 ### Notes
-This is for educational purposes.
-All commands were tested on Ubuntu 22.04.
+This playbook is modular and beginner-friendly
+
+Designed for testing and learning purposes
+
+You can extend it with roles, templates, and handlers later
