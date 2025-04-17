@@ -1,5 +1,10 @@
 .PHONY: ping
 
 ping:
-	ansible -i inventory.ini prod_servers -m ping
+	ansible servers -m ping
 
+install-git:
+	ansible-playbook install_git.yml
+
+remove-git:
+	ansible-playbook -i inventory.ini remove_git.yml
