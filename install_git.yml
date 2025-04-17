@@ -1,0 +1,12 @@
+---
+- name: Install Git on remote servers
+  hosts: servers
+  become: yes
+
+  tasks:
+    - name: Ensure Git is installed
+      apt:
+        name: git
+        state: present
+        update_cache: yes
+

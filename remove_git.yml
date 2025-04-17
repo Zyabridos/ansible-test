@@ -1,0 +1,11 @@
+---
+- name: Remove Git from remote servers
+  hosts: servers
+  become: yes
+
+  tasks:
+    - name: Ensure Git is removed
+      apt:
+        name: git
+        state: absent
+

@@ -21,7 +21,7 @@ make install
 ### 2. Verify installation
 
 ```bash
-ssh root@YOUR_IP
+ssh root@IP_OF_YOUR_SERVER
 git --version
 # Output: git version 2.x.x
 ```
@@ -34,7 +34,7 @@ make remove
 
 ### 4. Verify removal
 ```bash
-ssh root@YOUR_IP
+ssh root@IP_OF_YOUR_SERVER
 git --version
 # Output: Command 'git' not found
 ```
