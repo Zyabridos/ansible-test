@@ -1,5 +1,5 @@
 .PHONY: ping
 
 ping:
-	ansible -i inventory.ini do_server -m ping
+	ansible -i inventory.ini prod_servers -m ping
 
