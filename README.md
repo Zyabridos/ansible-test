@@ -3,32 +3,24 @@
 This repository is created as part of my Ansible learning journey.  
 It includes simple playbooks to **install** and **remove Git** on remote Ubuntu servers.
 
-## ⚙️ Server Setup Playbook with Tags
+# Ansible Nginx Setup
 
-This section contains an Ansible playbook designed to prepare a remote Ubuntu server with common development tools and user accounts. The playbook supports **tag-based execution**, allowing you to run only specific parts of the configuration.
+This playbook installs and configures **Nginx** to serve a simple HTML page.  
+It includes a handler to automatically restart Nginx when the config file changes.
 
-### 📁 Contents
-
-- `playbook.yml` – main playbook with tagged tasks
-- `Makefile` – make commands to run tagged tasks
-- `inventory.ini` – defines remote servers
-
-### Tags in use
-
-| Tag        | Description                                      |
-|------------|--------------------------------------------------|
-| `update`   | Updates the apt package cache                    |
-| `packages` | Installs required tools: Git, Make, Node.js      |
-| `users`    | Creates users: `arya`, `sansa`, and `tirion`     |
-| `all`      | Runs all of the above                            |
-
----
-
-#### Check if users were created
+## Usage
 
 ```bash
-ssh root@IP_ADRESS_OF_YOUR_SERVER "grep -E 'arya|sansa|tirion' /etc/passwd"
-``` 
+make show-html
+```
+
+## Result
+
+- Visit `http://your-server-ip` — you’ll see the **"Hello World!"** page
+- Edit `files/index.html` to change the HTML content
+- Run `make show-html` to apply changes with Ansible
+- Refresh the page to see the updated result
+```
 
 ### Prerequisites
 A remote Ubuntu server (e.g. from DigitalOcean)
