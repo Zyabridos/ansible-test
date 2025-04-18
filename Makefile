@@ -3,5 +3,5 @@
 ping:
 	ansible servers -m ping
 
-show-html:
-	ansible-playbook show-html-playbook.yml
+create-users:
+	ansible-playbook create_users_with_git.yml

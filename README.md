@@ -3,37 +3,42 @@
 This repository is created as part of my Ansible learning journey.  
 It includes simple playbooks to **install** and **remove Git** on remote Ubuntu servers.
 
-# Ansible Nginx Setup
+This playbook automatically creates multiple users on a remote server with:
 
-This playbook installs and configures **Nginx** to serve a simple HTML page.  
-It includes a handler to automatically restart Nginx when the config file changes.
+- Custom `.gitconfig` files
+- Uploaded SSH public keys
+- Configured Git aliases
+- Works on Debian/Ubuntu
 
-## Usage
+## What It Does
 
-```bash
-make show-html
+- Creates users: `jaime`, `sansa`, `robert`
+- Sets up their home folders
+- Adds your SSH public key to `~/.ssh/authorized_keys`
+- Generates `.gitconfig` for each user with aliases and personal name/email
+
+## How to Run
+
+```
+bash
+make create-users
 ```
 
-## Result
-
-- Visit `http://your-server-ip` — you’ll see the **"Hello World!"** page
-- Edit `files/index.html` to change the HTML content
-- Run `make show-html` to apply changes with Ansible
-- Refresh the page to see the updated result
+# How to Verify
+SSH into the server as one of the new users:
 ```
+bash
+ssh jaime@your_server_ip
+Initialize a test git repo:
 
-### Prerequisites
-A remote Ubuntu server (e.g. from DigitalOcean)
-
-SSH access with a private key
-
-Python installed on the server
-
-Ansible installed on your local machine
-
-### Notes
-This playbook is modular and beginner-friendly
-
-Designed for testing and learning purposes
-
-You can extend it with roles, templates, and handlers later
+```
+bash
+git init
+```
+Check config & aliases:
+```
+bash
+git config --list
+git st      # should show git status
+git hist    # custom log view
+```

@@ -1,0 +1,48 @@
+---
+- name: Create users with Git configs and SSH access
+  hosts: servers
+  become: true
+  vars:
+    users:
+      - jaime
+      - sansa
+      - robert
+
+  tasks:
+
+    - name: Create users
+      user:
+        name: "{{ item }}"
+        state: present
+        shell: /bin/bash
+        create_home: yes
+      loop: "{{ users }}"
+
+    - name: Create .ssh directory
+      file:
+        path: "/home/{{ item }}/.ssh"
+        state: directory
+        owner: "{{ item }}"
+        group: "{{ item }}"
+        mode: '0700'
+      loop: "{{ users }}"
+
+    - name: Upload public SSH key
+      copy:
+        src: files/id_ed25519.pub
+        dest: "/home/{{ item }}/.ssh/authorized_keys"
+        owner: "{{ item }}"
+        group: "{{ item }}"
+        mode: '0600'
+      loop: "{{ users }}"
+
+    - name: Add .gitconfig to each user
+      template:
+        src: templates/gitconfig.j2
+        dest: "/home/{{ item }}/.gitconfig"
+        owner: "{{ item }}"
+        group: "{{ item }}"
+        mode: '0644'
+      loop: "{{ users }}"
+      vars:
+        username: "{{ item }}"
