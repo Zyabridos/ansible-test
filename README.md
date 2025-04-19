@@ -3,42 +3,43 @@
 This repository is created as part of my Ansible learning journey.  
 It includes simple playbooks to **install** and **remove Git** on remote Ubuntu servers.
 
-This playbook automatically creates multiple users on a remote server with:
+This playbook deploys a simple HTML page to a remote Ubuntu server using **Ansible**.  
+It demonstrates:
 
-- Custom `.gitconfig` files
-- Uploaded SSH public keys
-- Configured Git aliases
-- Works on Debian/Ubuntu
+- Using **Jinja2 filters** (like `upper`) to manipulate variables
+- Injecting **dynamic values from Ansible facts**
+- Rendering an HTML page using the `template` module
+
+---
 
 ## What It Does
 
-- Creates users: `jaime`, `sansa`, `robert`
-- Sets up their home folders
-- Adds your SSH public key to `~/.ssh/authorized_keys`
-- Generates `.gitconfig` for each user with aliases and personal name/email
+- Installs **Nginx**
+- Renders a dynamic HTML file from a Jinja2 template
+- Displays:
+  - A headline message with the server’s **hostname in uppercase**
+  - The **current deployment date and time**
 
-## How to Run
+---
 
+## Example Output
+
+```html
+<h1>Hello World!</h1>
+<h2>THIS IS SERVER WEB1!</h2>
+<small>Deployed at: 2025-04-18 23:12:34</small>
+```
+## How to Use
+
+### 1. Clone the repo and update `inventory.ini`:
+
+```ini
+[servers]
+web1 ansible_host=YOUR_SERVER_IP
+```
+
+### 2. Run the playbook:
 ```
 bash
-make create-users
-```
-
-# How to Verify
-SSH into the server as one of the new users:
-```
-bash
-ssh jaime@your_server_ip
-Initialize a test git repo:
-
-```
-bash
-git init
-```
-Check config & aliases:
-```
-bash
-git config --list
-git st      # should show git status
-git hist    # custom log view
+make deploy-html
 ```

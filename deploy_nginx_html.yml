@@ -1,0 +1,35 @@
+---
+- name: Deploy Nginx and render dynamic HTML
+  hosts: servers
+  become: true
+  gather_facts: true
+
+  vars:
+    html_path: /usr/share/nginx/html/index.html
+    message: "This is server {{ ansible_hostname }}!"
+
+  tasks:
+    - name: Install Nginx
+      apt:
+        name: nginx
+        state: present
+        update_cache: yes
+
+    - name: Ensure Nginx is started and enabled
+      service:
+        name: nginx
+        state: started
+        enabled: true
+
+    - name: Render dynamic HTML page
+      template:
+        src: templates/index.html.j2
+        dest: "{{ html_path }}"
+        mode: '0644'
+      notify: Restart Nginx
+
+  handlers:
+    - name: Restart Nginx
+      service:
+        name: nginx
+        state: restarted
