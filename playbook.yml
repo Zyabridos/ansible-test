@@ -1,0 +1,8 @@
+- name: Setup environment for web app
+  hosts: servers
+  become: true
+
+  roles:
+    - git
+    - nodejs
+    - postgres

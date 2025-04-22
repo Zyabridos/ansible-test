@@ -3,21 +3,19 @@
 This repository is part of my Ansible learning journey.  
 It includes playbooks to:
 
-- ✅ Install & remove Git on remote Ubuntu servers  
-- 🖥️ Deploy a dynamic HTML page using **Nginx + Jinja2 templates**  
-- 🐄 Render ASCII art with **cowsay** based on server name
+- ✅ Install & remove Git on remote Ubuntu servers
+- 🖥️ Deploy a dynamic HTML page using Nginx + Jinja2 templates
+- 🐄 Render ASCII art with cowsay based on server name
+- 🗃️ Set up PostgreSQL with a custom database and user
 
 ---
 
 ## 📦 What It Does
 
-- Installs **Nginx** and **cowsay**
-- Renders an HTML file using the `template` module
-- Dynamically injects:
-  - ✅ The server’s hostname in **uppercase**
-  - 🕒 The current **deployment time**
-  - 🐄 ASCII-art from `cowsay`
-
+- Installs and configures: Git, Nginx, PostgreSQL, Node.js, cowsay
+- Renders a dynamic HTML file using the template module
+- Dynamically injects: The server’s hostname in uppercase, The current deployment time, ASCII-art from cowsa
+- Creates a PostgreSQL: Database: app_db, User: app_user with password, Grants full privileges to that user
 ---
 
 ## 🧪 Example Output
@@ -48,5 +46,12 @@ web1 ansible_host=YOUR_SERVER_IP
 ### 2. Run the playbook:
 ```
 bash
+# Deploy dynamic HTML (Nginx + cowsay + facts)
 make deploy-html
+```
+
+```
+bash
+# Create PostgreSQL DB, user, and grant privileges
+make setup-db
 ```
