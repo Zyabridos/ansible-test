@@ -1,32 +1,39 @@
-# 🧪 Ansible Git Playbook
+# 🧪 Ansible Git + Nginx + Cowsay Playbook
 
-This repository is created as part of my Ansible learning journey.  
-It includes simple playbooks to **install** and **remove Git** on remote Ubuntu servers.
+This repository is part of my Ansible learning journey.  
+It includes playbooks to:
 
-This playbook deploys a simple HTML page to a remote Ubuntu server using **Ansible**.  
-It demonstrates:
-
-- Using **Jinja2 filters** (like `upper`) to manipulate variables
-- Injecting **dynamic values from Ansible facts**
-- Rendering an HTML page using the `template` module
+- ✅ Install & remove Git on remote Ubuntu servers  
+- 🖥️ Deploy a dynamic HTML page using **Nginx + Jinja2 templates**  
+- 🐄 Render ASCII art with **cowsay** based on server name
 
 ---
 
-## What It Does
+## 📦 What It Does
 
-- Installs **Nginx**
-- Renders a dynamic HTML file from a Jinja2 template
-- Displays:
-  - A headline message with the server’s **hostname in uppercase**
-  - The **current deployment date and time**
+- Installs **Nginx** and **cowsay**
+- Renders an HTML file using the `template` module
+- Dynamically injects:
+  - ✅ The server’s hostname in **uppercase**
+  - 🕒 The current **deployment time**
+  - 🐄 ASCII-art from `cowsay`
 
 ---
 
-## Example Output
+## 🧪 Example Output
 
 ```html
 <h1>Hello World!</h1>
-<h2>THIS IS SERVER WEB1!</h2>
+<h2>THIS IS SERVER UBUNTU-S-1VCPU-1GB-FRA1-02!</h2>
+<pre><code> _____________________________
+/ This is server              \
+\ ubuntu-s-1vcpu-1gb-fra1-02! /
+ -----------------------------
+        \   ^__^
+         \  (oo)\_______
+            (__)\       )\/\
+                ||----w |
+                ||     ||</code></pre>
 <small>Deployed at: 2025-04-18 23:12:34</small>
 ```
 ## How to Use

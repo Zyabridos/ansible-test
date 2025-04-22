@@ -1,35 +1,28 @@
----
-- name: Deploy Nginx and render dynamic HTML
-  hosts: servers
+- name: Deploy Nginx with dynamic HTML and cowsay
+  hosts: all
   become: true
-  gather_facts: true
-
   vars:
-    html_path: /usr/share/nginx/html/index.html
     message: "This is server {{ ansible_hostname }}!"
-
   tasks:
-    - name: Install Nginx
+    - name: Install Nginx and cowsay
       apt:
-        name: nginx
+        name:
+          - nginx
+          - cowsay
         state: present
-        update_cache: yes
+        update_cache: true
 
-    - name: Ensure Nginx is started and enabled
-      service:
-        name: nginx
-        state: started
-        enabled: true
+    - name: Run cowsay with server message
+      ansible.builtin.command: cowsay "{{ message }}"
+      register: cowsay_result
 
-    - name: Render dynamic HTML page
+    - name: Deploy HTML file with dynamic content
       template:
         src: templates/index.html.j2
-        dest: "{{ html_path }}"
-        mode: '0644'
-      notify: Restart Nginx
+        dest: /usr/share/nginx/html/index.html
 
-  handlers:
-    - name: Restart Nginx
+    - name: Ensure Nginx is running
       service:
         name: nginx
         state: restarted
+        enabled: true
